@@ -55,6 +55,14 @@ def test_read_returns_full_body(store):
     assert "name: k" in out
 
 
+def test_read_names_returns_only_memory_files(store, tmp_path):
+    store.save("valid_memory", "user", "d", "body")
+    (tmp_path / "not a memory.md").write_text("body")
+    (tmp_path / "folder.md").mkdir()
+
+    assert store.read_names() == ["valid_memory"]
+
+
 def test_read_missing_raises(store):
     with pytest.raises(MemoryError):
         store.read("does_not_exist")

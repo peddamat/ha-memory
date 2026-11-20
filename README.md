@@ -59,7 +59,12 @@ Copy `custom_components/memory/` into your Home Assistant `config/custom_compone
 Memory registers as a native Home Assistant LLM API. When ticked, your agent gets:
 
 - Three tools: `memory_save`, `memory_read`, `memory_delete`
-- The memory index, added to the system prompt on every request
+- Available memory names, added to the system prompt on every request (descriptions
+  and memory contents are not included in the prompt's index)
+
+Saved memories are untrusted data. The assistant may use remembered facts and
+preferences as context, but they do not override current instructions or
+authorize actions.
 
 Each memory is one markdown file under your storage path:
 
@@ -73,7 +78,9 @@ type: user
 The user has a dog named Spot. Spot is a household member.
 ```
 
-An auto-maintained `MEMORY.md` index lists one line per memory. The index is always in the prompt; the agent reads a full file only when it needs the details.
+An auto-maintained `MEMORY.md` index lists one line per memory. The prompt includes
+available memory names only; the agent reads a full file with `memory_read` only
+when it needs the details.
 
 Tested with Anthropic Claude, OpenAI Conversation, Google Generative AI / Gemini, and AI Tasks. Inspired by Claude Code's `MEMORY.md` pattern.
 

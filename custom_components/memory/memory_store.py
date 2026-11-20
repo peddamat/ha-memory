@@ -65,6 +65,16 @@ class MemoryStore:
         with open(self.index_path) as f:
             return f.read()
 
+    def read_names(self) -> list[str]:
+        with os.scandir(self.path) as entries:
+            return sorted(
+                entry.name[:-3]
+                for entry in entries
+                if entry.name.endswith(".md")
+                and _NAME_RE.fullmatch(entry.name[:-3])
+                and entry.is_file(follow_symlinks=False)
+            )
+
     def read(self, name: str) -> str:
         self._validate_name(name)
         target = os.path.join(self.path, f"{name}.md")
@@ -98,6 +108,10 @@ class MemoryStore:
 
 async def async_read_index(hass: HomeAssistant, store: MemoryStore) -> str:
     return await hass.async_add_executor_job(store.read_index)
+
+
+async def async_read_names(hass: HomeAssistant, store: MemoryStore) -> list[str]:
+    return await hass.async_add_executor_job(store.read_names)
 
 
 async def async_read(hass: HomeAssistant, store: MemoryStore, name: str) -> str:
