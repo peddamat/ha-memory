@@ -39,7 +39,7 @@ That's it. Ask in your own words, like *"remember that…"* or *"don't forget…
 Most memory add-ons use a vector database or a separate memory engine. This one keeps a short list of memories in the assistant's prompt and stores each memory as a markdown file.
 
 | | Memory | Retrieval-based (Home Mind, hass-agent-llm, …) |
-|---|---|---|
+| --- | --- | --- |
 | Setup | Install, tick a box | Extra services or databases |
 | Read and edit memories | Any text editor | Usually not plain files |
 | Best for | A few dozen facts | Thousands of memories |
@@ -67,6 +67,7 @@ preferences as context, but they do not override current instructions or
 authorize actions.
 
 Each memory is one markdown file under your storage path:
+h
 
 ```markdown
 ---
@@ -90,7 +91,7 @@ Tested with Anthropic Claude, OpenAI Conversation, Google Generative AI / Gemini
 <summary><b>Memory Types</b></summary>
 
 | Type | What it's for |
-|---|---|
+| --- | --- |
 | `user` | Facts about the user, household, family, pets |
 | `feedback` | How the assistant should behave (style preferences, things to avoid) |
 | `project` | State of ongoing things in the home |
